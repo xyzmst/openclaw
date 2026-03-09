@@ -430,6 +430,7 @@ const ToolExecSchema = z.object(ToolExecBaseShape).strict().optional();
 const ToolFsSchema = z
   .object({
     workspaceOnly: z.boolean().optional(),
+    allowedPaths: z.array(z.string()).optional(),
   })
   .strict()
   .optional();

@@ -280,6 +280,12 @@ export type FsToolsConfig = {
    * Default: false (unrestricted, matches legacy behavior).
    */
   workspaceOnly?: boolean;
+  /**
+   * Additional allowed path prefixes when workspaceOnly is true.
+   * Paths starting with any entry in this list are permitted even under workspaceOnly mode.
+   * Example: ["~/.openclaw/media"] to allow inbound media access.
+   */
+  allowedPaths?: string[];
 };
 
 export type AgentToolsConfig = {
