@@ -35,6 +35,12 @@ type FetchMediaOptions = {
   readIdleTimeoutMs?: number;
   ssrfPolicy?: SsrFPolicy;
   lookupFn?: LookupFn;
+  /**
+   * When false, skips DNS pinning in the SSRF guard so a proxy-configured fetchImpl
+   * can route the connection. Set to false when the hostname is explicitly trusted
+   * (e.g. via ssrfPolicy.allowedHostnames) and a proxy handles the actual connection.
+   */
+  pinDns?: boolean;
 };
 
 function stripQuotes(value: string): string {
@@ -92,6 +98,7 @@ export async function fetchRemoteMedia(options: FetchMediaOptions): Promise<Fetc
     readIdleTimeoutMs,
     ssrfPolicy,
     lookupFn,
+    pinDns,
   } = options;
 
   let res: Response;
@@ -106,6 +113,7 @@ export async function fetchRemoteMedia(options: FetchMediaOptions): Promise<Fetc
         maxRedirects,
         policy: ssrfPolicy,
         lookupFn,
+        pinDns,
       }),
     );
     res = result.response;
